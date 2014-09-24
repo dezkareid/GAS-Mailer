@@ -1,0 +1,31 @@
+function mailer() 
+{
+  var Ssheet = SpreadsheetApp.openById("1w4YC8x5Z4i_-pMcNaM9gTkN0AODqGI5UAxttKh4j-dA");
+  var sheet = Ssheet.getActiveSheet();
+  var values = sheet.getDataRange().getValues();
+  var gdgLogoUrl =
+         "https://lh6.googleusercontent.com/-QhVkC8uNjkg/U1ytSQfiBpI/AAAAAAAAACc/0Y24zUDuKys/w480-h270-no/oie_279814pWMV1Xqt.png";
+   var gdgLogoBlob = UrlFetchApp
+                          .fetch(gdgLogoUrl)
+                          .getBlob()
+                          .setName("gdgLogo");
+  for (var i = 2; i < values.length; i++) {
+    Logger.log(values[i][2]);
+    MailApp.sendEmail({
+      to: values[i][2],
+      subject: "BatttleHack",
+      htmlBody: "Hola "+values[i][1]+", agradezco tu paciente espera de información sobre el Battlehack. El horario de salida es el siguiente:<br/>"+
+      "<br/> Viernes 26 de septiembre a las 7:20 de la tarde en el ITESM (entrada principal).<br/>Será un viaje largo asi que hay que llevar provisiones ya que llegaremos a eso de las 7 de la mañana a nuestro destino<br/><br/>"+
+      "Nuestro regreso será el día domingo a las 7:00 pm para llegar a Monterrey a eso de las 7:00 am<br/><br/>"+
+      "De favor revisen sus correos, al parecer mandaron un correo para confirmar si asistirán o no, espero que puedas asistir, para cualquier duda puedes contactarme a este correo :) <br/>"+
+      "Gracias por acompañarnos en esta aventura que traera experiencia y muchas recompensas, esperamos seguir contribuyendo con la comunidad desarrolladora con el fin de traer esos eventos aquí.<br/><br/>"+
+      "<a href='https://plus.google.com/u/0/b/117540886576474322118/117540886576474322118/about/p/pub'><img src='cid:gdgLogo'></a>",         
+     inlineImages:
+       {
+         gdgLogo: gdgLogoBlob,
+         
+       }
+   });
+    
+  }
+}
